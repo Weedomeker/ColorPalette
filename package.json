@@ -1,0 +1,16 @@
+{
+  "name": "colorpalette",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "electron-mocha -W",
+    "debug-trace-depreciation": ".\\node_modules\\electron\\dist\\electron --interactive .",
+    "start": "electron ."
+  },
+  "license": "MIT",
+  "dependencies": {
+    "colorthief": "^2.3.2",
+    "electron": "^13.1.7"
+  }
+}

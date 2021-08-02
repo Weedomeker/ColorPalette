@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>ColorPalette</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <script defer src="./js/renderer.js"></script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="title">ColorPalette</div>
+      <button class="option" id="minimizeBtn">&#x1f5d5</button>
+      <button class="option" id="maximizeBtn">&#128470</button>
+      <button class="option" id="closeBtn">&#x2716</button>
+    </header>
+      <div id="drop" style="background-image: url('./assets/dragdrop.png')">
+      </div>
+      <div id="imgContainer">
+        <img id="img" src="" alt="">
+      </div>
+      <div class="info" id="info">
+        <h2>Couleur Dominante</h2>
+        <div id="swatches">
+        </div>
+      </div>
+  </div>
+</body>
+</html>
