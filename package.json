@@ -1,16 +1,34 @@
 {
   "name": "colorpalette",
   "version": "1.0.0",
-  "description": "",
+  "description": "Returns a color palette from an image.",
+  "author": "Weedomeker",
   "main": "main.js",
+  "icon": "./assets/icone.ico",
   "scripts": {
-    "test": "electron-mocha -W",
-    "debug-trace-depreciation": ".\\node_modules\\electron\\dist\\electron --interactive .",
+    "dist": "electron-builder",
+    "package-win": "electron-packager . --overwrite --platform=win32 --arch=ia32 --icon=./assets/icone.ico --prune=true --out=dist",
     "start": "electron ."
+  },
+  "build": {
+    "appId": "com.colorpalette.app",
+    "productName": "Color Palette",
+    "icon": "./assets/icone.ico",
+    "compression": "maximum",
+    "target": "NSIS",
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false
+    }
   },
   "license": "MIT",
   "dependencies": {
-    "colorthief": "^2.3.2",
-    "electron": "^13.1.7"
+    "colorthief": "^2.3.2"
+  },
+  "devDependencies": {
+    "electron": "^13.1.8",
+    "electron-builder": "^22.11.7",
+    "electron-packager": "^15.3.0",
+    "rcedit": "^3.0.1"
   }
 }

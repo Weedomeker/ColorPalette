@@ -1,4 +1,4 @@
-const ColorThief = require("colorthief");
+const ColorThief = require('colorthief');
 const { ipcRenderer } = require("electron");
 const ipc = ipcRenderer;
 
@@ -36,31 +36,72 @@ el.ondragleave = function () {
   return false;
 };
 
-el.ondrop = (e) => {
+el.ondrop = async (e) => {
+
   e.preventDefault();
   el.ondragleave();
-  let imgPath;
+
+  // Loader Show
+  await (document.querySelector(".loader").classList.add("show"));
+
+  // Image Path
+  let image;
   for (const f of e.dataTransfer.files) {
-    imgPath = f.path;
+    image = f.path;
   }
 
-  document.getElementById("img").src = `file://${imgPath}`;
+  // Image Load
+  await (document.getElementById("imgLoad").src = `file://${image}`);
+  
 
-  ColorThief.getColor(imgPath)
-    .then((color) => {
-      console.log(color);
-      // document.getElementById("swatches").style.backgroundColor = `rgb(${color})`;
-      document.getElementById("swatches").innerHTML = `<div class="swatch" style="background-color: rgb(${color}"></div>`;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  // Convert rgb to hex
+const rgbToHex = (r, g, b) => '#' + [r, g, b].map(x => {
+  const hex = x.toString(16)
+  return hex.length === 1 ? '0' + hex : hex
+}).join('')
 
-  ColorThief.getPalette(imgPath, 5)
-    .then((palette) => {
-      console.log(palette);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+ // Loader Remove
+await (document.querySelector(".loader").classList.remove("show"));
+  let start = Date.now();
+  await ColorThief.getColor(image)
+ .then(color => {
+   let elapsedTime = Date.now() - start;
+   document.getElementById('color').innerHTML = `
+   <div class="swatch" style="background-color: rgb(${color})">
+   <span class="tooltiptext">RGB: (${color})</span>
+   </div>
+   <div class="timeColor">${elapsedTime} ms
+   </div>
+   `;
+   document.getElementById("codeRgb").innerHTML = `<span style="background-color: rgb(${color})">rgb(${color});</span>\r\n`;
+   document.getElementById("codeHex").innerHTML = `<span style="background-color: rgb(${color})">${rgbToHex(color[0],color[1],color[2])};\r\n</span>`;
+ })
+ .catch(err => {
+   console.log(err);
+ })
+
+ await ColorThief.getPalette(image, 10)
+  .then(palette => {
+    let elapsedTime = Date.now() - start;
+    document.getElementById('palette').innerHTML = "";
+   for (let i = 0; i < palette.length; i++) {
+
+     const result = `
+    <div class="swatch" style="background-color: rgb(${palette[i]})">
+    <span class="tooltiptext">RGB: (${palette[i]})</span>
+    </div>
+    `;
+    document.getElementById('palette').innerHTML += result;
+    const resultRgb = `<span style="background-color: rgb(${palette[i]})">rgb(${palette[i]});</span>\r\n`;
+    const resultHex = `<span style="background-color: rgb(${palette[i]})">${rgbToHex(palette[i][0], palette[i][1], palette[i][2])};</span>\r\n`;
+     document.getElementById("codeRgb").innerHTML += resultRgb;
+    document.getElementById("codeHex").innerHTML += resultHex;
+   }
+   const time = document.getElementById('palette');
+   time.innerHTML += `<div class="timePalette">${elapsedTime} ms</div>`
+  })
+  .catch(err => {
+    console.log(err);
+  })
+
 };
