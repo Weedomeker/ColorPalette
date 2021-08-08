@@ -24,7 +24,7 @@
   "license": "MIT",
   "dependencies": {
     "colorthief": "^2.3.2",
-    "xmldom": "^0.6.0"
+    "xmldom": "https://github.com/xmldom/xmldom.git"
   },
   "devDependencies": {
     "electron": "^13.1.8",
