@@ -1,28 +1,70 @@
 {
   "name": "colorpalette",
+  "productName": "Color Palette",
   "version": "1.0.0",
   "description": "Returns a color palette from an image.",
   "author": "Weedomeker",
   "main": "main.js",
-  "icon": "./assets/icone.ico",
-  "scripts": {
-    "dist": "electron-builder",
-    "package-win": "electron-packager . --overwrite --platform=win32 --arch=ia32 --icon=./assets/icone.ico --prune=true --out=dist",
+    "scripts": {
+    "postinstall": "electron-builder install-app-deps",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder -mwl",
+    "package-win": "electron-packager . --overwrite --platform=win32 --arch=ia32 --icon=assets/icon.ico --prune=true --out=dist",
     "start": "electron ."
   },
   "build": {
-    "appId": "com.colorpalette.app",
+    "appId": "com.electron.colorpalette",
     "productName": "Color Palette",
-    "icon": "./assets/icone.ico",
-    "compression": "maximum",
-    "target": "NSIS",
+    "icon": "assets/icon.ico",
+    "compression": "normal",
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "zip",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.utilities"
+    },
+    "linux": {
+      "category": "Utility"
+    },
     "nsis": {
-      "allowToChangeInstallationDirectory": true,
-      "oneClick": false
+      "artifactName": "${productName}-Setup-${version}-${os}.${ext}"
+    },
+    "portable": {
+      "artifactName": "${productName}-Portable-${version}-${os}.${ext}"
     }
+  },
+  "keywords": [],
+  "bugs": "https://github.com/Weedomeker/ColorPalette/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Weedomeker/ColorPalette.git"
   },
   "license": "MIT",
   "dependencies": {
+    "clipboard": "^2.0.8",
     "colorthief": "^2.3.2",
     "xmldom": "https://github.com/xmldom/xmldom.git"
   },

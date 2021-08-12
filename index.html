@@ -9,7 +9,7 @@
 </head>
 <body>
   <header>
-    <div class="logo"><img src="./assets/logo_ColorPalette.png" alt="logo ColorPalett"></div>
+    <div class="logo"><img src="./assets/icon.ico" alt="logo ColorPalett"></div>
     <div class="title">ColorPalette</div>
     <button class="option" id="minimizeBtn">&#x1f5d5</button>
     <button class="option" id="maximizeBtn">&#128470</button>
@@ -19,17 +19,24 @@
   <div class="container">
       <div id="drop" style="background-image: url('./assets/dragdrop.png')"></div>
       <div id="imgContainer">
-        <div class="loader"></div>
-        <img id="imgLoad" src="" alt="">
+        <img id="imgLoad">
       </div>
-      <div class="info" id="info">
         <h2 class="colorTitle">Couleur Dominante</h2>
         <div id="color"></div>
         <h2 class="paletteTitle">Couleurs Palette</h2>
+
+        <div class="rangeContent">
+          <span id="rangeValue">8</span> 
+          <Input class="range" type="range" value="8" min="2" max="20" onChange="rangeSlide(this.value)" onmousemove="rangeSlide(this.value)"></Input>
+      </div>      
+
         <div id="palette"></div>
-        <div id="codeRgb"></div>
-        <div id="codeHex"></div>
+
+        <textarea id="codeRgb" spellcheck="false" readonly="true" data-clipboard-action="copy" data-clipboard-target="#codeRgb"></textarea>
+        <textarea id="codeHex" spellcheck="false" readonly="true" data-clipboard-action="copy" data-clipboard-target="#codeHex"></textarea>
+      <div id="version"></div>
       </div>
-  </div>
+
+      <script src="js/clipboard.min.js"></script>
 </body>
 </html>
